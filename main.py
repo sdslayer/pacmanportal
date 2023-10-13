@@ -33,7 +33,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        
+
         keys_pressed = pygame.key.get_pressed()
         check_movement(keys_pressed, PACMAN)
         update_pacman_frame()  # Update pacman's frame every frame
