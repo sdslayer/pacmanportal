@@ -42,4 +42,3 @@ class Board:
 
   def update(self):
     self.draw_level()
-    pygame.display.update()

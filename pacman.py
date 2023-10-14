@@ -2,13 +2,15 @@ import pygame
 from pygame.sprite import Sprite
 
 class Pacman(Sprite):
-  def __init__(self, game):
+  def __init__(self, game, bportal, oportal):
     super().__init__()
     self.screen = game.screen
     self.settings = game.settings
     self.screen_rect = game.screen.get_rect()
     self.scoreboard = game.scoreboard
     self.level = game.board.level
+    self.bportal = bportal
+    self.oportal = oportal
     #load the pacman image
     self.image = pygame.image.load('images/player_images/0.png')
     self.rect  = self.image.get_rect()
@@ -132,67 +134,55 @@ class Pacman(Sprite):
 
 
   def check_movement(self, event):
-    keys_pressed = pygame.key.get_pressed()
-    self.check_collisions()
-    self.check_pos()
-    # if keys_pressed[pygame.K_LEFT] and self.turns_allowed[0]:
-    #   self.direction = 0
-    #   self.pac_x -= self.settings.SPEED
-    #   self.direction = 1
-    # if keys_pressed[pygame.K_RIGHT] and self.turns_allowed[1]:
-    #   self.direction = 1
-    #   self.pac_x += self.settings.SPEED
-    #   self.direction = 0
+      keys_pressed = pygame.key.get_pressed()
+      self.check_collisions()
+      self.check_pos()
+      self.check_pos()
+      self.move_pac()
 
-    # if keys_pressed[pygame.K_UP] and self.turns_allowed[2]:
-    #   self.direction = 2
-    #   self.pac_y -= self.settings.SPEED
-    #   self.direction = 2
-    # if keys_pressed[pygame.K_DOWN] and self.turns_allowed[3]:
-    #   self.direction = 3
-    #   self.pac_y += self.settings.SPEED
-    #   self.direction = 3
-    self.check_pos()
-    self.move_pac()
-    if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_RIGHT:
-        self.direction_command = 0
-      if event.key == pygame.K_LEFT:
-        self.direction_command = 1
-      if event.key == pygame.K_UP:
-        self.direction_command = 2
-      if event.key == pygame.K_DOWN:
-        self.direction_command = 3
-    if event.type == pygame.KEYUP:
-      if event.key == pygame.K_RIGHT and self.direction_command == 0:
-        self.direction_command = self.direction
-      if event.key == pygame.K_LEFT and self.direction_command == 1:
-        self.direction_command = self.direction
-      if event.key == pygame.K_UP and self.direction_command == 2:
-        self.direction_command = self.direction
-      if event.key == pygame.K_DOWN and self.direction_command == 3:
-        self.direction_command = self.direction
+      if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_b:
+              self.bportal.spawnportal(self.pac_x, self.pac_y, self.direction)
+          if event.key == pygame.K_o:
+              self.oportal.spawnportal(self.pac_x, self.pac_y, self.direction)
 
-    if self.direction_command == 0 and self.turns_allowed[0]:
-      self.direction = 0
-    if self.direction_command == 1 and self.turns_allowed[1]:
-      self.direction = 1
-    if self.direction_command == 2 and self.turns_allowed[2]:
-      self.direction = 2
-    if self.direction_command == 3 and self.turns_allowed[3]:
-      self.direction = 3
+      if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_RIGHT:
+              self.direction_command = 0
+          if event.key == pygame.K_LEFT:
+              self.direction_command = 1
+          if event.key == pygame.K_UP:
+              self.direction_command = 2
+          if event.key == pygame.K_DOWN:
+              self.direction_command = 3
 
-    for i in range(4):
-      if self.direction_command == i and self.turns_allowed[i]:
-        self.direction = i
+      if event.type == pygame.KEYUP:
+          if event.key == pygame.K_RIGHT and self.direction_command == 0:
+              self.direction_command = self.direction
+          if event.key == pygame.K_LEFT and self.direction_command == 1:
+              self.direction_command = self.direction
+          if event.key == pygame.K_UP and self.direction_command == 2:
+              self.direction_command = self.direction
+          if event.key == pygame.K_DOWN and self.direction_command == 3:
+              self.direction_command = self.direction
 
-    if self.pac_x > 900:
-      self.pac_x = -47
-    elif self.pac_x < -50:
-      self.pac_x = 897
+      if self.direction_command == 0 and self.turns_allowed[0]:
+          self.direction = 0
+      if self.direction_command == 1 and self.turns_allowed[1]:
+          self.direction = 1
+      if self.direction_command == 2 and self.turns_allowed[2]:
+          self.direction = 2
+      if self.direction_command == 3 and self.turns_allowed[3]:
+          self.direction = 3
 
+      for i in range(4):
+          if self.direction_command == i and self.turns_allowed[i]:
+              self.direction = i
 
-
+      if self.pac_x > 900:
+          self.pac_x = -47
+      elif self.pac_x < -50:
+          self.pac_x = 897
 
   def update(self):
     self.current_pacman_frame = self.pacman_frames[self.current_frame]
@@ -206,7 +196,6 @@ class Pacman(Sprite):
     elif self.direction == 3:
         self.screen.blit(pygame.transform.rotate(self.current_pacman_frame, 270), (self.pac_x, self.pac_y))
     pygame.draw.circle(self.screen, 'white', (self.pac_x + 23, self.pac_y + 24), 20, 2)
-    pygame.display.update()
 
   def draw(self):
     self.screen.blit(self.image, self.rect)
