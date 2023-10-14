@@ -3,12 +3,8 @@ from settings import Settings
 from pacman import Pacman
 from board import Board
 from scoreboard import Scoreboard
-<<<<<<< Updated upstream
-from ghosts import Ghost
-from portals import BluePortal, OrangePortal
-=======
 from ghosts import Ghosts
->>>>>>> Stashed changes
+from portals import BluePortal, OrangePortal
 
 
 class PacManGame:
@@ -20,15 +16,10 @@ class PacManGame:
     self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))  #screen variable will be used instead of WIN
     self.board = Board(self)
-<<<<<<< Updated upstream
     self.bportal = BluePortal(self)  # Create a single instance of BluePortal
     self.oportal = OrangePortal(self)
     self.pacman = Pacman(self, self.bportal, self.oportal)
-    # self.ghosts = Ghosts(game = self)
-=======
-    self.pacman = Pacman(self)
     self.ghosts = Ghosts(game = self)
->>>>>>> Stashed changes
     pygame.display.set_caption('Pac-Man')
 
   def reset(self):

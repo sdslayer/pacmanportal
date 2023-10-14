@@ -5,7 +5,7 @@ from pacman import Pacman
 
 class Ghosts(Sprite):
     # blinky_img = pygame.transform.scale(pygame.image.load(insert png sprite))
-    pinky_img = pygame.transform.scale(pygame.image.load(f'images/ghost_images/pink.png'))
+    pinky_img = pygame.transform.scale(pygame.image.load(f'images/ghost_images/pink.png'), 0, 1)
     # inky_img = pygame.transform.scale(pygame.image.load(insert png sprite))
     # clyde_img = pygame.transform.scale(pygame.image.load(insert png sprite))
     # spooked_img = pygame.transform.scale(pygame.image.load(insert png sprite))
