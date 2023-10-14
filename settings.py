@@ -7,4 +7,5 @@ class Settings():
     self.FPS = 60
     self.SPEED = 3
     self.FONT = pygame.font.Font('emulogic.ttf', 20)
-    
+    self.poweredup_time = 10000
+    self.startup_time = 5500

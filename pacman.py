@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
+import copy
 
 class Pacman(Sprite):
   def __init__(self, game):
@@ -13,14 +14,20 @@ class Pacman(Sprite):
     self.image = pygame.image.load('images/player_images/0.png')
     self.rect  = self.image.get_rect()
 
+    self.start_pos, self.end_pos = 900, 0
+
+
     #pacman animation settings
     self.PACMAN_FRAME_DURATION = 5  # Number of game frames to display each frame
     self.current_frame = 0
     self.frame_counter = 0
     # R, D, L, R
+    self.poweredup = False
+    self.started = False
     self.turns_allowed = [False, False, False, False]
     self.direction = 0  # 0: left, 1: right, 2: up, 3: down
     self.direction_command = 0
+    self.pac_x_menu, self.pac_y_menu = 0, 500
     self.pac_x, self.pac_y = 450, 663
     self.center_x = self.pac_x + 22
     self.center_y = self.pac_y + 22
@@ -49,6 +56,10 @@ class Pacman(Sprite):
       if self.level[centery // pieceheight][centerx // piecewidth] == 1:
         self.level[centery // pieceheight][centerx // piecewidth] = 0 #clear the pellet
         self.scoreboard.update_score(10)
+      if self.level[centery // pieceheight][centerx // piecewidth] == 2:
+        self.level[centery // pieceheight][centerx // piecewidth] = 0 #clear the pellet
+        self.poweredup = True
+        self.scoreboard.update_score(50)
 
   def check_pos(self):
     # print('directon: ', self.direction)
@@ -195,3 +206,33 @@ class Pacman(Sprite):
 
   def draw(self):
     self.screen.blit(self.image, self.rect)
+
+
+
+  def menu_mode(self):
+    self.current_pacman_frame = self.pacman_frames[self.current_frame]
+    if self.pac_x_menu > 900:
+      self.end_pos = 900
+    if self.pac_x_menu < -50:
+      self.end_pos = 0
+
+    if self.end_pos == 0:
+      self.pac_x_menu += self.settings.SPEED
+      self.screen.blit(self.current_pacman_frame, (self.pac_x_menu, self.pac_y_menu))
+    if self.end_pos == 900:
+      self.pac_x_menu -= self.settings.SPEED
+      self.screen.blit(pygame.transform.flip(self.current_pacman_frame, True, False), (self.pac_x_menu, self.pac_y_menu))
+    pygame.display.update()
+
+  def copy(self):
+      copyobj = Pacman()
+      for name, attr in self.__dict__.items():
+          if hasattr(attr, 'copy') and callable(getattr(attr, 'copy')):
+              copyobj.__dict__[name] = attr.copy()
+          else:
+              copyobj.__dict__[name] = copy.deepcopy(attr)
+      return copyobj
+
+  def starting_pac(self):
+    self.screen.blit(self.pacman_frames[2], (self.pac_x, self.pac_y))
+    pygame.display.update()
