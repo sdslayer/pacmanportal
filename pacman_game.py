@@ -5,7 +5,8 @@ from board import Board
 from scoreboard import Scoreboard
 from ghosts import Ghosts
 from portals import BluePortal, OrangePortal
-
+from menus import Menus
+from sounds import Sounds
 
 class PacManGame:
 
@@ -20,6 +21,10 @@ class PacManGame:
     self.oportal = OrangePortal(self)
     self.pacman = Pacman(self, self.bportal, self.oportal)
     self.ghosts = Ghosts(game = self)
+    self.pacman = Pacman(self)
+    self.menus = Menus(self)
+    self.sounds = Sounds(self)
+    # self.ghosts = Ghosts(game = self)
     pygame.display.set_caption('Pac-Man')
 
   def reset(self):
@@ -31,6 +36,8 @@ class PacManGame:
   def play(self):
     clock = pygame.time.Clock()
     running = True
+    in_menu = True
+    start_time = pygame.time.get_ticks()
     while running:
         clock.tick(self.settings.FPS)
         
@@ -54,17 +61,42 @@ class PacManGame:
                     pacman_direction = self.pacman.direction
                     print(f"PACX: {pacman_x}, PACY: {pacman_y}, PACDIR: {pacman_direction}")
                     self.oportal.spawnportal(pacman_x, pacman_y, pacman_direction)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if self.menus.play_button_rect.collidepoint(event.pos):
+                    in_menu = False
+        if in_menu:
+          self.menus.draw_menu()
 
+        else:
+          #Start to load up the game
+          current_time = pygame.time.get_ticks()
+          elapsed_time = current_time - start_time
+          self.sounds.play_start_up()
+          if not self.pacman.started:
+            self.pacman.starting_pac()
+          #Actually startig the game
+          if elapsed_time >= self.settings.startup_time:
+            self.sounds.stop_sounds()
+            self.pacman.started = True
+            self.pacman.check_movement(event= event)  #Changed the function a lil to not accept any arguments
+            power_up_start_time = pygame.time.get_ticks()
+            if self.pacman.poweredup == True:
+              current_time_1 = pygame.time.get_ticks()
+              print('POWERED UP!')
+              elapsed_time_1 = current_time_1 - power_up_start_time
+              print('elapsed time: ', power_up_start_time)
+              if elapsed_time_1 == power_up_start_time + self.settings.poweredup_time:
+                print('Powered up FINISHED!')
+                self.pacman.poweredup = False
+            self.pacman.update_pacman_frame()  # Update pacman's frame every frame
+            self.pacman.update()
+            
         self.bportal.updateportal()
         self.bportal.checkcollisions()
         self.oportal.updateportal()
         self.oportal.checkcollisions()
         self.screen.fill((0, 0, 0))
         self.board.update() # Call draw screen and pass the level array to it
-        self.pacman.check_movement(event= event)  #Changed the function a lil to not accept any arguments
-        self.pacman.update_pacman_frame()  # Update pacman's frame every frame
-        self.pacman.update()
-
         self.bportal.draw()
         self.oportal.draw()
 
