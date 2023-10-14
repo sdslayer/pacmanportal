@@ -26,10 +26,11 @@ class BluePortal(Sprite):
             self.screen.blit(self.image, self.rect)
 
     def spawnportal(self, pacman_x, pacman_y, pacman_direction):
+        print('spawnnign\n')
         if self.spawned:
             # Delete the existing portal
             self.deleteportal()
-        
+
         # Create a new portal
         self.portal_x = pacman_x + self.rect.width // 3 + 2  # Adjusted for the width of the portal image
         self.portal_y = pacman_y + 5
@@ -124,10 +125,11 @@ class OrangePortal(Sprite):
             self.screen.blit(self.image, self.rect)
 
     def spawnportal(self, pacman_x, pacman_y, pacman_direction):
+        print('spawnnign\n')
         if self.spawned:
             # Delete the existing portal
             self.deleteportal()
-        
+
         # Create a new portal
         self.portal_x = pacman_x + self.rect.width // 3 + 2  # Adjusted for the width of the portal image
         self.portal_y = pacman_y + 5
@@ -196,4 +198,3 @@ class OrangePortal(Sprite):
                 return False
 
         return True
-

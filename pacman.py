@@ -146,11 +146,10 @@ class Pacman(Sprite):
       self.check_pos()
       self.move_pac()
 
-      if event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_b:
-              self.bportal.spawnportal(self.pac_x, self.pac_y, self.direction)
-          if event.key == pygame.K_o:
-              self.oportal.spawnportal(self.pac_x, self.pac_y, self.direction)
+      if keys_pressed[pygame.K_b]:
+          self.bportal.spawnportal(self.pac_x, self.pac_y, self.direction)
+      if keys_pressed[pygame.K_o]:
+          self.oportal.spawnportal(self.pac_x, self.pac_y, self.direction)
 
       if event.type == pygame.KEYDOWN:
           if event.key == pygame.K_RIGHT:
