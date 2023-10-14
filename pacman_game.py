@@ -3,6 +3,7 @@ from settings import Settings
 from pacman import Pacman
 from board import Board
 from scoreboard import Scoreboard
+from ghosts import Ghost
 
 
 class PacManGame:
@@ -38,6 +39,19 @@ class PacManGame:
         self.pacman.check_movement(event= event)  #Changed the function a lil to not accept any arguments
         self.pacman.update_pacman_frame()  # Update pacman's frame every frame
         self.pacman.update()
+
+        # blinky = Ghost(blinky_x, blinky_y, targets[0], ghost_speed, 
+        #                blinky_img, blinky_direction, blinky_dead, blinky_box, 0)
+        
+        # inky = Ghost(inky_x, inky_y, targets[0], ghost_speed, 
+        #                inky_img, inky_direction, inky_dead, inky_box, 0)
+        
+        # pinky = Ghost(pinky_x, pinky_y, targets[0], ghost_speed, 
+        #                pinky_img, pinky_direction, pinky_dead, pinky_box, 0)
+        
+        # clyde = Ghost(clyde_x, clyde_y, targets[0], ghost_speed, 
+        #                clyde_img, clyde_direction, clyde_dead, clyde_box, 0)
+
 
 
     pygame.quit()

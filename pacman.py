@@ -18,10 +18,11 @@ class Pacman(Sprite):
     self.current_frame = 0
     self.frame_counter = 0
     # R, D, L, R
+    
     self.turns_allowed = [False, False, False, False]
     self.direction = 0  # 0: left, 1: right, 2: up, 3: down
     self.direction_command = 0
-    self.pac_x, self.pac_y = 450, 663
+    self.pac_x, self.pac_y = 450, 663 #speed
     self.center_x = self.pac_x + 22
     self.center_y = self.pac_y + 22
 
@@ -41,14 +42,28 @@ class Pacman(Sprite):
           self.current_frame = (self.current_frame + 1) % len(self.pacman_frames) # Set the next frame
       # print('Current Frame: ', self.frame_counter)
 
+  # def check_collisions(self):
+  #   centerx, centery = self.pac_x + 23, self.pac_y + 24
+  #   pieceheight = ((self.settings.screen_height - 50) // 32)
+  #   piecewidth = (self.settings.screen_width // 30)
+  #   if 0 < self.pac_x < 870:
+  #     if self.level[centery // pieceheight][centerx // piecewidth] == 1:
+  #       self.level[centery // pieceheight][centerx // piecewidth] = 0 #clear the pellet
+  #       self.scoreboard.update_score(10)
+
   def check_collisions(self):
     centerx, centery = self.pac_x + 23, self.pac_y + 24
     pieceheight = ((self.settings.screen_height - 50) // 32)
     piecewidth = (self.settings.screen_width // 30)
+    self.poweredup = False
     if 0 < self.pac_x < 870:
       if self.level[centery // pieceheight][centerx // piecewidth] == 1:
         self.level[centery // pieceheight][centerx // piecewidth] = 0 #clear the pellet
         self.scoreboard.update_score(10)
+      if self.level[centery // pieceheight][centerx // piecewidth] == 2:
+        self.level[centery // pieceheight][centerx // piecewidth] = 0 #clear the pellet
+        self.poweredup = True
+        self.scoreboard.update_score(50)
 
   def check_pos(self):
     # print('directon: ', self.direction)
