@@ -3,7 +3,7 @@ from settings import Settings
 from pacman import Pacman
 from board import Board
 from scoreboard import Scoreboard
-# from ghosts import Ghosts
+from ghosts import Ghosts
 from portals import BluePortal, OrangePortal
 from menus import Menus
 from sounds import Sounds
@@ -24,7 +24,7 @@ class PacManGame:
     # self.pacman = Pacman(self)
     self.menus = Menus(self)
     self.sounds = Sounds(self)
-    # self.ghosts = Ghosts(game = self)
+    #self.ghosts = Ghosts(game = self)
     pygame.display.set_caption('Pac-Man')
 
   def reset(self):

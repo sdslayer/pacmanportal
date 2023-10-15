@@ -6,13 +6,14 @@ from pacman import Pacman
 class Ghosts(Sprite):
 
 
-    for i in range(4):
+    #for i in range(4):
     # blinky_img = pygame.transform.scale(pygame.image.load(insert png sprite))
-        pinky_img = [pygame.transform.scale(pygame.image.load(f'images/ghost_images/pink.png'), 45, 45)]
-    # inky_img = pygame.transform.scale(pygame.image.load(insert png sprite))
-    # clyde_img = pygame.transform.scale(pygame.image.load(insert png sprite))
-    # spooked_img = pygame.transform.scale(pygame.image.load(insert png sprite))
-    # dead_ghost_img = pygame.transform.scale(pygame.image.load(insert png sprite))
+        #pinky_img = [pygame.transform.scale(pygame.image.load(f'images/ghost_images/pink.png'), 45, 45)]
+    pinky_img = pygame.image.load('images/ghost_images/pink.png')
+    inky_img = pygame.transform.scale(pygame.image.load(insert png sprite))
+    clyde_img = pygame.transform.scale(pygame.image.load(insert png sprite))
+    spooked_img = pygame.transform.scale(pygame.image.load(insert png sprite))
+    dead_ghost_img = pygame.transform.scale(pygame.image.load(insert png sprite))
 
     blinky_x = 56 # starting positions outside of the box
     blinky_y = 58 # starting positions outside of the box
@@ -34,7 +35,8 @@ class Ghosts(Sprite):
     flicker = False
 
     eaten_ghost = [False, False, False, False]
-    targets = [(Pacman.pac_x, Pacman.pac_y), (Pacman.pac_x, Pacman.pac_y), (Pacman.pac_x, Pacman.pac_y), (Pacman.pac_x, Pacman.pac_y)] #targets player's
+    targets = [(Pacman.pac_x, Pacman.pac_y), (Pacman.pac_x, Pacman.pac_y), 
+               (Pacman.pac_x, Pacman.pac_y), (Pacman.pac_x, Pacman.pac_y)] #targets player's
     blinky_dead = False #tracks if they're dead
     pinky_dead = False
     inky_dead = False
@@ -65,17 +67,17 @@ class Ghosts(Sprite):
         self.screen = game.screen
         self.level = game.board.level
 
-    # def draw(self):
-    #     powerup = False
-    #     eaten_ghost = [False, False, False, False]
-    #     if (not powerup and not self.dead) or (eaten_ghost[self.id] and powerup and not self.dead):
-    #         self.screen.blit(self.img, (self.x_pos, self.y_pos))
-    #     elif powerup and not self.dead and not eaten_ghost[self.id]:
-    #         self.screen.blit(spooked_img, (self.x_pos, self.y_pos))
-    #     else:
-    #         self.screen.blit(dead_img, (self.x_pos, self.y_pos))
-    #     ghost_rect = pygame.rect.Rect((self.center_x - 18, self.center_y - 18), (36, 36))
-    #     return ghost_rect
+    def draw(self):
+        powerup = False
+        eaten_ghost = [False, False, False, False]
+        if (not powerup and not self.dead) or (eaten_ghost[self.id] and powerup and not self.dead):
+            self.screen.blit(self.img, (self.x_pos, self.y_pos))
+        elif powerup and not self.dead and not eaten_ghost[self.id]:
+            self.screen.blit(spooked_img, (self.x_pos, self.y_pos))
+        else:
+            self.screen.blit(dead_img, (self.x_pos, self.y_pos))
+        ghost_rect = pygame.rect.Rect((self.center_x - 18, self.center_y - 18), (36, 36))
+        return ghost_rect
 
     def check_collisions(self):
         # R, L, U, D
