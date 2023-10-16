@@ -55,19 +55,17 @@ class BluePortal(Sprite):
                 if self.check_movement_valid(1):
                     self.portal_y += 10
 
+    def is_moving(self):
+        prev_x, prev_y = self.portal_x, self.portal_y
+        self.updateportal()
+        return (prev_x, prev_y) != (self.portal_x, self.portal_y)
+
     def checkcollisions(self):
         if self.spawned:
-            pieceheight = ((self.settings.screen_height - 50) // 32)
-            piecewidth = (self.settings.screen_width // 30)
-            # Check if the portal is hitting a wall
-            # if self.level[self.portal_y // pieceheight][self.portal_x // piecewidth] >= 3:
-            #     print(f"self.portal_y: {self.portal_y}, pieceheight: {pieceheight}, self.portal_y // pieceheight: {self.portal_y // pieceheight}")
-            #     print(f"self.portal_x: {self.portal_x}, piecewidth: {piecewidth}, self.portal_x // piecewidth: {self.portal_x // piecewidth}")
-            #     print(f"self.level[{self.portal_y // pieceheight}][{self.portal_x // piecewidth}]: {self.level[self.portal_y // pieceheight][self.portal_x // piecewidth]}")
-            #     print("Portal has hit wall")
-            #     print(" ")
-            #     print(" ")
-            #     print(" ")
+            if not self.check_movement_valid(self.pacman_direction):
+                #print("Blue portal has hit a wall")
+                return False
+            return True
 
     def check_movement_valid(self, direction):
         pieceheight = ((self.settings.screen_height - 50) // 32)
@@ -81,16 +79,20 @@ class BluePortal(Sprite):
             if self.level[next_y // pieceheight][next_x // piecewidth] >= 3:
                 return False
         elif direction == 1:  # Down
-            # print(f"{direction}")
-            next_x -= 10
-            next_y += round(self.rect.height*0.7)  # Adjust to the bottom pixel
-            if self.level[next_y // pieceheight][next_x // piecewidth] in (4, 7, 8):
+            next_x += 10
+            next_y += round(self.rect.height * 0.7)
+            if (
+                next_x >= self.settings.screen_width
+                or self.level[next_y // pieceheight][next_x // piecewidth] in (4, 7, 8)
+            ):
                 return False
         elif direction == 2:  # Right
-            # print(f"{direction}")
-            next_y -= 10
-            next_x += round(self.rect.width*0.7)  # Adjust to the right pixel
-            if self.level[next_y // pieceheight][next_x // piecewidth] == 3:
+            next_y += 10
+            next_x += round(self.rect.width * 0.7)
+            if (
+                next_y >= self.settings.screen_height - 50
+                or self.level[next_y // pieceheight][next_x // piecewidth] == 3
+            ):
                 return False
         elif direction == 3:  # Left
             # print(f"{direction}")
@@ -99,6 +101,7 @@ class BluePortal(Sprite):
                 return False
 
         return True
+
 
 class OrangePortal(Sprite):
     def __init__(self, game):
@@ -154,19 +157,17 @@ class OrangePortal(Sprite):
                 if self.check_movement_valid(1):
                     self.portal_y += 10
 
+    def is_moving(self):
+        prev_x, prev_y = self.portal_x, self.portal_y
+        self.updateportal()
+        return (prev_x, prev_y) != (self.portal_x, self.portal_y)
+
     def checkcollisions(self):
         if self.spawned:
-            pieceheight = ((self.settings.screen_height - 50) // 32)
-            piecewidth = (self.settings.screen_width // 30)
-            # Check if the portal is hitting a wall
-            # if self.level[self.portal_y // pieceheight][self.portal_x // piecewidth] >= 3:
-            #     print(f"self.portal_y: {self.portal_y}, pieceheight: {pieceheight}, self.portal_y // pieceheight: {self.portal_y // pieceheight}")
-            #     print(f"self.portal_x: {self.portal_x}, piecewidth: {piecewidth}, self.portal_x // piecewidth: {self.portal_x // piecewidth}")
-            #     print(f"self.level[{self.portal_y // pieceheight}][{self.portal_x // piecewidth}]: {self.level[self.portal_y // pieceheight][self.portal_x // piecewidth]}")
-            #     print("Portal has hit wall")
-            #     print(" ")
-            #     print(" ")
-            #     print(" ")
+            if not self.check_movement_valid(self.pacman_direction):
+                #print("Orange portal has hit a wall")
+                return False
+            return True
 
     def check_movement_valid(self, direction):
         pieceheight = ((self.settings.screen_height - 50) // 32)
@@ -180,16 +181,20 @@ class OrangePortal(Sprite):
             if self.level[next_y // pieceheight][next_x // piecewidth] >= 3:
                 return False
         elif direction == 1:  # Down
-            #print(f"{direction}")
-            next_x -= 10
-            next_y += round(self.rect.height*0.7)  # Adjust to the bottom pixel
-            if self.level[next_y // pieceheight][next_x // piecewidth] in (4, 7, 8):
+            next_x += 10
+            next_y += round(self.rect.height * 0.7)
+            if (
+                next_x >= self.settings.screen_width
+                or self.level[next_y // pieceheight][next_x // piecewidth] in (4, 7, 8)
+            ):
                 return False
         elif direction == 2:  # Right
-            #print(f"{direction}")
-            next_y -= 10
-            next_x += round(self.rect.width*0.7)  # Adjust to the right pixel
-            if self.level[next_y // pieceheight][next_x // piecewidth] == 3:
+            next_y += 10
+            next_x += round(self.rect.width * 0.7)
+            if (
+                next_y >= self.settings.screen_height - 50
+                or self.level[next_y // pieceheight][next_x // piecewidth] == 3
+            ):
                 return False
         elif direction == 3:  # Left
             #print(f"{direction}")

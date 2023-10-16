@@ -80,7 +80,7 @@ class PacManGame:
             self.pacman.started = True
             if moving:
               self.blinky.update()
-              print('collided: ', self.ghosts.collided)
+              #print('collided: ', self.ghosts.collided)
               if self.settings.reset:
                 self.game_functions.reset()
 
@@ -112,9 +112,9 @@ class PacManGame:
             #       pacman_direction = self.pacman.direction
             #       print(f"PACX: {pacman_x}, PACY: {pacman_y}, PACDIR: {pacman_direction}")
             #       self.oportal.spawnportal(pacman_x, pacman_y, pacman_direction)
-            self.bportal.updateportal()
+            self.bportal.is_moving()
             self.bportal.checkcollisions()
-            self.oportal.updateportal()
+            self.oportal.is_moving()
             self.oportal.checkcollisions()
             # self.screen.fill((0, 0, 0))
             # self.board.update() # Call draw screen and pass the level array to it
