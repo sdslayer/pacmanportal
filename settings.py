@@ -9,6 +9,14 @@ class Settings():
     self.FONT = pygame.font.Font('emulogic.ttf', 20)
     self.poweredup_time = 10000
     self.startup_time = 5500
+    self.lives = 3
+    self.power_counter = 0
+    self.moving = False
+    self.start = False
+    self.start_time = 0
+    self.startup_counter = 0
+    self.game_over = False
+    self.reset = False
 
     #alien settings
     self.blinky_x = 56
