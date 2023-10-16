@@ -7,7 +7,7 @@ class BluePortal(Sprite):
         self.screen = game.screen
         self.settings = game.settings
         self.screen_rect = game.screen.get_rect()
-        self.scoreboard = game.scoreboard
+        # self.scoreboard = game.scoreboard
         self.level = game.board.level
         self.image = pygame.image.load('images/portals/blue.png')
         scaling_factor = 0.7  # 10% reduction
@@ -106,7 +106,7 @@ class OrangePortal(Sprite):
         self.screen = game.screen
         self.settings = game.settings
         self.screen_rect = game.screen.get_rect()
-        self.scoreboard = game.scoreboard
+        # self.scoreboard = game.scoreboard
         self.level = game.board.level
         self.image = pygame.image.load('images/portals/orange.png')
         scaling_factor = 0.7  # 10% reduction
