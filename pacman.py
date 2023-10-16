@@ -210,10 +210,22 @@ class Pacman(Sprite):
   def draw(self):
     self.screen.blit(self.image, self.rect)
 
+  def teleport(self):
+              pacman_rect = pygame.Rect(self.pac_x, self.pac_y, self.pacman_frames[0].get_width(), self.pacman_frames[0].get_height())
+              if pacman_rect.colliderect(self.bportal.rect):
+                  self.pac_x = self.oportal.portal_x
+                  self.pac_y = self.oportal.portal_y
+                  self.bportal.deleteportal()
+                  self.oportal.deleteportal()
+              elif pacman_rect.colliderect(self.oportal.rect):
+                  self.pac_x = self.bportal.portal_x
+                  self.pac_y = self.bportal.portal_y
+                  self.bportal.deleteportal()
+                  self.oportal.deleteportal()
 
 
   def menu_mode(self):
-    print('menu pac')
+    #print('menu pac')
     self.current_pacman_frame = self.pacman_frames[self.current_frame]
     if self.pac_x_menu > 900:
       self.menu_end = 900

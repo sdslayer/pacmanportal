@@ -1,4 +1,5 @@
 import pygame
+import os
 
 class Scoreboard():
   def __init__(self, game):
@@ -15,9 +16,17 @@ class Scoreboard():
     print('SCORE: ', self.score)
 
   def get_high_score(self):
-    with open('scores/highscore.txt', 'r') as file:
-      self.temp = file.read()
-      self.high_score = int(self.temp)
+      # Check if the 'scores' directory exists, and create it if not
+      if not os.path.exists('scores'):
+          os.mkdir('scores')
+      try:
+          with open('scores/highscore.txt', 'r') as file:
+              self.temp = file.read()
+              self.high_score = int(self.temp)
+      except FileNotFoundError:
+          with open('scores/highscore.txt', 'w') as file:
+              file.write('0')
+          self.high_score = 0
 
 
   def save_score(self):

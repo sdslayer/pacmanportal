@@ -120,6 +120,11 @@ class PacManGame:
             self.bportal.checkcollisions()
             self.oportal.is_moving()
             self.oportal.checkcollisions()
+            if self.bportal.spawned and self.oportal.spawned:
+              if not self.bportal.is_moving() and not self.oportal.is_moving():
+                self.pacman.teleport()
+                #print("Both portals not moving.")
+              #print("Orange portal not moving...")
             # self.screen.fill((0, 0, 0))
             # self.board.update() # Call draw screen and pass the level array to it
             self.bportal.draw()
