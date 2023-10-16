@@ -15,7 +15,7 @@ class Pacman(Sprite):
     #load the pacman image
     self.image = pygame.image.load('images/player_images/0.png')
     self.rect  = self.image.get_rect()
-
+    self.eaten_ghosts = [False, False, False, False]
     self.start_pos, self.end_pos = 900, 0
 
 
@@ -25,6 +25,7 @@ class Pacman(Sprite):
     self.frame_counter = 0
     # R, D, L, R
     self.poweredup = False
+    self.power_count = 0
     self.started = False
     self.turns_allowed = [False, False, False, False]
     self.direction = 0  # 0: left, 1: right, 2: up, 3: down
@@ -71,6 +72,7 @@ class Pacman(Sprite):
       if self.level[centery // pieceheight][centerx // piecewidth] == 2:
         self.level[centery // pieceheight][centerx // piecewidth] = 0 #clear the pellet
         self.poweredup = True
+        self.power_count = 0
         self.scoreboard.update_score(50)
 
   def check_pos(self):
