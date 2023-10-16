@@ -16,7 +16,7 @@ class Pacman(Sprite):
     self.image = pygame.image.load('images/player_images/0.png')
     self.rect  = self.image.get_rect()
     self.eaten_ghosts = [False, False, False, False]
-    self.start_pos, self.end_pos = 900, 0
+    self.start_pos, self.end_pos = 450, 663
 
 
     #pacman animation settings
@@ -34,6 +34,7 @@ class Pacman(Sprite):
     self.pac_x, self.pac_y = 450, 663
     self.center_x = self.pac_x + 22
     self.center_y = self.pac_y + 22
+    self.pac_circle = pygame.draw.circle(self.screen, 'white', (self.pac_x + 23, self.pac_y + 24), 30, 2)
 
     self.pacman_frames = []
     for i in range(4):
@@ -64,7 +65,7 @@ class Pacman(Sprite):
     centerx, centery = self.pac_x + 23, self.pac_y + 24
     pieceheight = ((self.settings.screen_height - 50) // 32)
     piecewidth = (self.settings.screen_width // 30)
-    self.poweredup = False
+    # self.poweredup = False
     if 0 < self.pac_x < 870:
       if self.level[centery // pieceheight][centerx // piecewidth] == 1:
         self.level[centery // pieceheight][centerx // piecewidth] = 0 #clear the pellet
@@ -202,7 +203,8 @@ class Pacman(Sprite):
         self.screen.blit(pygame.transform.rotate(self.current_pacman_frame, 90), (self.pac_x, self.pac_y))
     elif self.direction == 3:
         self.screen.blit(pygame.transform.rotate(self.current_pacman_frame, 270), (self.pac_x, self.pac_y))
-    pygame.draw.circle(self.screen, 'white', (self.pac_x + 23, self.pac_y + 24), 20, 2)
+    self.pac_circle = pygame.draw.circle(self.screen, 'white', (self.pac_x + 23, self.pac_y + 24), 20, 2)
+
 
   def draw(self):
     self.screen.blit(self.image, self.rect)

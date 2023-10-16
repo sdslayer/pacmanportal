@@ -76,24 +76,24 @@ class BluePortal(Sprite):
         next_y = self.portal_y
 
         if direction == 0:  # Up
-            print(f"{direction}")
+            # print(f"{direction}")
             next_x += 10
             if self.level[next_y // pieceheight][next_x // piecewidth] >= 3:
                 return False
         elif direction == 1:  # Down
-            print(f"{direction}")
+            # print(f"{direction}")
             next_x -= 10
             next_y += round(self.rect.height*0.7)  # Adjust to the bottom pixel
             if self.level[next_y // pieceheight][next_x // piecewidth] in (4, 7, 8):
                 return False
         elif direction == 2:  # Right
-            print(f"{direction}")
+            # print(f"{direction}")
             next_y -= 10
             next_x += round(self.rect.width*0.7)  # Adjust to the right pixel
             if self.level[next_y // pieceheight][next_x // piecewidth] == 3:
                 return False
         elif direction == 3:  # Left
-            print(f"{direction}")
+            # print(f"{direction}")
             next_y += 10
             if self.level[next_y // pieceheight][next_x // piecewidth] >= 3:
                 return False

@@ -3,10 +3,11 @@ from settings import Settings
 from pacman import Pacman
 from board import Board
 from scoreboard import Scoreboard
-from ghosts import Ghosts
+from ghosts import Ghosts, Blinky
 from portals import BluePortal, OrangePortal
 from menus import Menus
 from sounds import Sounds
+from game_functions import GameFunctions
 
 class PacManGame:
 
@@ -20,10 +21,12 @@ class PacManGame:
     self.oportal = OrangePortal(self)
     self.scoreboard = Scoreboard(game = self)
     self.pacman = Pacman(self, self.bportal, self.oportal)
-    # self.ghosts = Ghosts(game = self)
+    self.ghosts = Ghosts(game = self)
+    self.blinky = Blinky(game= self)
     # self.pacman = Pacman(self)
     self.menus = Menus(self)
     self.sounds = Sounds(self)
+    self.game_functions = GameFunctions(self)
     #self.ghosts = Ghosts(game = self)
     pygame.display.set_caption('Pac-Man')
 
@@ -37,11 +40,11 @@ class PacManGame:
     clock = pygame.time.Clock()
     running = True
     in_menu = True
-    power_counter = 0
-    start_time = pygame.time.get_ticks()
-    moving = False
-    startup_counter = 0
-    start = False
+    self.settings.power_counter = 0
+    self.settings.start_time = pygame.time.get_ticks()
+    self.settings.moving = False
+    self.settings.startup_counter = 0
+    self.settings.start = False
     while running:
         clock.tick(self.settings.FPS)
 
@@ -55,17 +58,19 @@ class PacManGame:
           self.menus.draw_menu()
         #Starting the game and all functions
         else:
-          current_time = pygame.time.get_ticks()
-          elapsed_time = current_time - start_time
+          # current_time = pygame.time.get_ticks()
+          # elapsed_time = current_time - start_time
+          if self.settings.game_over:
+            self.game_functions.gameover()
           self.screen.fill((0, 0, 0))
           self.board.update() # Call draw screen and pass the level array to it
           self.scoreboard.draw_misc(poweredup=self.pacman.poweredup)
-          if startup_counter < 300:
+          if self.settings.startup_counter < 300:
               self.sounds.play_start_up()
               if not self.pacman.started:
                 self.pacman.starting_pac()
-              moving = False
-              startup_counter +=1
+              self.settings.moving = False
+              self.settings.startup_counter +=1
           else:
               moving = True
               self.pacman.started = True
@@ -74,6 +79,11 @@ class PacManGame:
             self.sounds.stop_sounds()
             self.pacman.started = True
             if moving:
+              self.blinky.update()
+              print('collided: ', self.ghosts.collided)
+              if self.settings.reset:
+                self.game_functions.reset()
+
               self.pacman.check_movement(event= event)  #Changed the function a lil to not accept any arguments
               self.pacman.update_pacman_frame()  # Update pacman's frame every frame
               self.pacman.update()
@@ -112,14 +122,15 @@ class PacManGame:
             self.oportal.draw()
             ###PORTALS#####
             power_up_start_time = pygame.time.get_ticks()
-            print('power count: ', power_counter)
-            if self.pacman.poweredup == True and power_counter < 600:
-              power_counter += 1
+            # print('power count: ', power_counter)
+            # print('poweredup: ', self.pacman.poweredup)
+            if self.pacman.poweredup == True and self.settings.power_counter < 600:
+              self.settings.power_counter += 1
               # print(power_counter)
               print('powered UP!')
-            elif self.pacman.poweredup and power_counter >= 600:
+            elif self.pacman.poweredup and self.settings.power_counter >= 600:
               print('ENDED POWER UP!')
-              power_counter = 0
+              self.settings.power_counter = 0
               self.pacman.poweredup = False
               # eaten_ghost = [False, False, False]
               # current_time_1 = pygame.time.get_ticks()
@@ -129,6 +140,7 @@ class PacManGame:
               # if elapsed_time_1 == power_up_start_time + self.settings.poweredup_time:
               #   print('Powered up FINISHED!')
               #   self.pacman.poweredup = False
+
 
 
 
