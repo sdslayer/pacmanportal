@@ -4,6 +4,7 @@ class Scoreboard():
   def __init__(self, game):
     self.score = 0
     self.high_score = 0
+    self.temp = ''
     self.settings = game.settings
     # self.pacman = game.pacman
     self.screen = game.screen
@@ -13,8 +14,17 @@ class Scoreboard():
     self.score += score
     print('SCORE: ', self.score)
 
+  def get_high_score(self):
+    with open('scores/highscore.txt', 'r') as file:
+      self.temp = file.read()
+      self.high_score = int(self.temp)
+
+
   def save_score(self):
-    pass
+    print('saving')
+    if self.score > self.high_score:
+      with open('scores/highscore.txt', 'w') as file:
+        file.write(str(self.score))
 
   def draw_misc(self, poweredup):
     score_text = self.font.render(f'Score: {self.score}', True, 'white')

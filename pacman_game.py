@@ -3,7 +3,7 @@ from settings import Settings
 from pacman import Pacman
 from board import Board
 from scoreboard import Scoreboard
-from ghosts import Ghosts, Blinky
+from ghosts import Ghosts, Blinky, Inky
 from portals import BluePortal, OrangePortal
 from menus import Menus
 from sounds import Sounds
@@ -23,6 +23,7 @@ class PacManGame:
     self.pacman = Pacman(self, self.bportal, self.oportal)
     self.ghosts = Ghosts(game = self)
     self.blinky = Blinky(game= self)
+    self.inky = Inky(game = self)
     # self.pacman = Pacman(self)
     self.menus = Menus(self)
     self.sounds = Sounds(self)
@@ -45,6 +46,8 @@ class PacManGame:
     self.settings.moving = False
     self.settings.startup_counter = 0
     self.settings.start = False
+    self.scoreboard.get_high_score()
+    print(self.scoreboard.high_score)
     while running:
         clock.tick(self.settings.FPS)
 
@@ -80,7 +83,8 @@ class PacManGame:
             self.pacman.started = True
             if moving:
               self.blinky.update()
-              print('collided: ', self.ghosts.collided)
+              self.inky.update()
+              # print('collided: ', self.ghosts.collided)
               if self.settings.reset:
                 self.game_functions.reset()
 
