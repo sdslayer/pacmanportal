@@ -17,6 +17,7 @@ class Pacman(Sprite):
     self.rect  = self.image.get_rect()
     self.eaten_ghosts = [False, False, False, False]
     self.start_pos, self.end_pos = 450, 663
+    self.menu_start, self.menu_end = 900, 0
 
 
     #pacman animation settings
@@ -212,16 +213,17 @@ class Pacman(Sprite):
 
 
   def menu_mode(self):
+    print('menu pac')
     self.current_pacman_frame = self.pacman_frames[self.current_frame]
     if self.pac_x_menu > 900:
-      self.end_pos = 900
+      self.menu_end = 900
     if self.pac_x_menu < -50:
-      self.end_pos = 0
+      self.menu_end = 0
 
-    if self.end_pos == 0:
+    if self.menu_end == 0:
       self.pac_x_menu += self.settings.SPEED
       self.screen.blit(self.current_pacman_frame, (self.pac_x_menu, self.pac_y_menu))
-    if self.end_pos == 900:
+    if self.menu_end == 900:
       self.pac_x_menu -= self.settings.SPEED
       self.screen.blit(pygame.transform.flip(self.current_pacman_frame, True, False), (self.pac_x_menu, self.pac_y_menu))
     pygame.display.update()

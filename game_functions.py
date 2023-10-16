@@ -3,11 +3,16 @@ import pygame
 class GameFunctions():
   def __init__(self, game):
     self.settings = game.settings
+    self.scoreboard = game.scoreboard
     self.pacman = game.pacman
     self.blinky = game.blinky
     self.ghosts = game.ghosts
 
   def gameover(self):
+    self.scoreboard.save_score()
+    self.quit_game()
+
+  def quit_game(self):
     pygame.quit()
 
   def reset(self):
@@ -33,5 +38,3 @@ class GameFunctions():
       self.settings.powerup = False
       self.settings.power_counter = 0
       self.settings.reset = False
-    else:
-      self.gameover()

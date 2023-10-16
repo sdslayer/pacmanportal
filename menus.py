@@ -13,6 +13,7 @@ class Menus():
   def __init__(self, game):
     self.screen = game.screen
     self.pacman = game.pacman
+    self.scoreboard = game.scoreboard
     self.screen_width = self.screen.get_width()
     self.screen_height = self.screen.get_height()
     self.font = pygame.font.Font('fonts/Pixeboy-z8XGD.ttf', 64)
@@ -27,6 +28,9 @@ class Menus():
       self.screen.fill(BLACK)
       self.screen.blit(self.play_button_text, self.play_button_rect)
       self.screen.blit(self.logo, (self.screen_width // 2 - self.logo_rect.width // 2, 0))
+      self.tmp = 'HIGH SCORE: ' + str(self.scoreboard.high_score)
+      self.highscore_text = self.font.render(self.tmp, True, WHITE)
+      self.screen.blit(self.highscore_text, (self.screen_width // 2 - self.logo_rect.width // 2, 10))
       self.draw_animations()
       self.pacman.update_pacman_frame()
       pygame.display.update()
